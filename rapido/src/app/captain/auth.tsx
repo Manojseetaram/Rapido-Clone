@@ -1,4 +1,4 @@
-import { View, Text,Image, TouchableOpacity } from "react-native";
+import { View, Text,Image, TouchableOpacity,Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { authStyles } from "@/styles/authStyles";
@@ -9,14 +9,19 @@ import CustomText from "@/components/shared/CustomeText";
 import PhoneInput from "@/components/shared/PhoneInput"
 import CustomButton from "@/components/shared/CustomButton";
 import { resetAndNavigate } from "@/utils/Helpers";
-
+import { signin } from "@/service/authService";
 
 const Auth = () => {
 
     const [phone, setPhone] = useState('');
     const handleText = async () => {
-        resetAndNavigate("/captain/home")
-    }
+           if (!phone && phone.length !== 10) {
+               Alert.alert("Bro enter your Phone number")
+               return
+           }
+       signin({role:'captain',phone})
+       }
+      
    
   return (
     <SafeAreaProvider style={authStyles.container}>
